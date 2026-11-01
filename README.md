@@ -17,13 +17,15 @@ Open `index.html` in a modern browser. Data stays in that browser's local storag
 
 ## Why this exists
 
-MSP community discussions describe repeated questions after handover packets are delivered and disagreement about overlap support and the moment responsibility changes. A small-provider onboarding discussion also calls out missing owners and fragmented process. These are qualitative pain signals, not proof of market size or willingness to pay:
+MSP community discussions describe repeated questions after handover packets are delivered and disagreement about overlap support and the moment responsibility changes. A commenter in a small-provider onboarding discussion also identifies missing owners and a lack of cohesive process. These are qualitative pain signals, not proof of market size or willingness to pay:
 
 - [Transitioning MSP asking too many questions](https://www.reddit.com/r/msp/comments/1qkeam5/transitioning_msp_asking_too_many_questions/)
 - [Offboarding standards](https://www.reddit.com/r/msp/comments/1roufo1/offboarding_standards/)
 - [MSP client onboarding](https://www.reddit.com/r/msp/comments/1qzh4my/msp_client_onboarding/)
 
 Generic checklist software is already available through products such as [ITFlow](https://docs.itflow.org/clients/onboarding), [ConnectWise PSA](https://www.connectwise.com/platform/psa/project-management), and [Hudu](https://www.hudu.com/tips_and_tricks_onboarding_offboarding). The hypothesis to test is whether neutral, cross-company coordination and a dated responsibility cutover are useful enough to warrant a dedicated tool.
+
+See [the customer-discovery guide](docs/customer-discovery.md) for non-leading interview questions and evidence that would support or disprove the idea.
 
 ## Open source
 
