@@ -6,7 +6,7 @@ It tracks who owns each request, its due date, evidence reference, unresolved ex
 
 ## Try the prototype
 
-Open `index.html` in a modern browser. Data stays in that browser's local storage. Use **Export JSON** to move a working file between people and **Export handover** to create a Markdown packet. No server or dependencies are required.
+Open `index.html` in a modern browser. Data stays in that browser's local storage. Use **Export JSON** to move a working file between people and **Export handover** to create a Markdown packet. To try a pre-filled fictional scenario, download [`examples/sample-handover.json`](examples/sample-handover.json) and import it in the app. No server or dependencies are required.
 
 ## Scope and safety
 
