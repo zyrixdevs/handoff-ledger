@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A local-first MSP transition handover ledger prototype.">
+  <title>Handoff Ledger</title>
+  <style>
+    :root { color-scheme: light; font: 15px/1.5 system-ui, sans-serif; color: #172426; background: #f2f5f2; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header { background: #143a34; color: #fff; padding: 2rem max(1rem, calc((100vw - 1120px)/2)); }
+    header p { max-width: 720px; margin: .4rem 0 0; color: #d7e6df; }
+    h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.5rem); letter-spacing: -.04em; }
+    h2 { margin: 0 0 1rem; font-size: 1.15rem; }
+    main { max-width: 1120px; margin: 1.5rem auto 4rem; padding: 0 1rem; }
+    .notice { border-left: 4px solid #c97731; background: #fff5e9; padding: .8rem 1rem; margin-bottom: 1rem; }
+    .card { background: #fff; border: 1px solid #dce4df; border-radius: 10px; padding: 1.2rem; margin: 1rem 0; box-shadow: 0 3px 12px #143a3409; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem 1rem; }
+    label { display: grid; gap: .3rem; font-size: .9rem; font-weight: 650; }
+    input, select, textarea, button { font: inherit; }
+    input, select, textarea { min-width: 0; width: 100%; padding: .6rem .7rem; border: 1px solid #b8c8c0; border-radius: 6px; color: inherit; background: #fff; }
+    textarea { resize: vertical; }
+    button, .button { border: 0; border-radius: 6px; background: #176657; color: #fff; padding: .6rem .9rem; cursor: pointer; font-weight: 650; text-decoration: none; }
+    button:hover, .button:hover { background: #104e43; }
+    button.secondary { color: #17473e; background: #e2eee8; }
+    button.danger { color: #8b2828; background: #fae7e5; }
+    .toolbar, .row-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; }
+    .toolbar { justify-content: space-between; margin: 1rem 0; }
+    .toolbar > div { display: flex; flex-wrap: wrap; gap: .55rem; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 840px; }
+    th, td { text-align: left; vertical-align: top; padding: .55rem; border-bottom: 1px solid #e6ece8; }
+    th { color: #49625a; font-size: .8rem; }
+    td input, td select { min-width: 110px; }
+    td:first-child input { min-width: 190px; }
+    td .remove { min-width: auto; padding: .4rem .55rem; }
+    .signoffs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .muted { color: #61736b; font-size: .88rem; }
+    #message { min-height: 1.4em; color: #176657; }
+    @media (max-width: 650px) { .grid, .signoffs { grid-template-columns: 1fr; } }
+    @media print { header { padding: 1rem; } main { margin: 0; } .notice, .toolbar, #message, .remove { display: none !important; } .card { break-inside: avoid; box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Handoff Ledger</h1>
+    <p>A shared-workflow idea in a local prototype: make handover requests, evidence, exceptions, and the cutover boundary clear to everyone involved.</p>
+  </header>
+  <main>
+    <div class="notice"><strong>Prototype safety:</strong> Do not enter credentials or secrets. Add a reference to your approved password manager instead. Names and dates below are acknowledgements, not legal or cryptographic signatures.</div>
+    <section class="card" aria-labelledby="transition-heading">
+      <h2 id="transition-heading">Transition</h2>
+      <div class="grid">
+        <label>Client<input data-field="client" maxlength="120" placeholder="Client organization"></label>
+        <label>Cutover date<input data-field="cutoverDate" type="date"></label>
+        <label>Outgoing provider<input data-field="outgoing" maxlength="120" placeholder="Provider handing over"></label>
+        <label>Incoming provider<input data-field="incoming" maxlength="120" placeholder="Provider taking over"></label>
+        <label>Client approver<input data-field="clientApprover" maxlength="120" placeholder="Person approving the handover"></label>
+        <label>Support boundary<textarea data-field="supportBoundary" rows="2" maxlength="1000" placeholder="What support continues, by whom, and until when?"></textarea></label>
+      </div>
+    </section>
+    <section class="card" aria-labelledby="requests-heading">
+      <h2 id="requests-heading">Requests and evidence</h2>
+      <p class="muted">Each row has one accountable party. Put a secure link or document reference in Evidence; never paste a secret.</p>
+      <div class="toolbar"><span id="summary" class="muted"></span><div><button id="add-row" type="button">Add request</button></div></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Request / exception</th><th>Owner</th><th>Due</th><th>Status</th><th>Evidence reference</th><th>Action</th></tr></thead>
+        <tbody id="items"></tbody>
+      </table></div>
+    </section>
+    <section class="card" aria-labelledby="ack-heading">
+      <h2 id="ack-heading">Party acknowledgements</h2>
+      <p class="muted">Record who acknowledged the packet and when. This is a workflow record, not identity verification.</p>
+      <div class="signoffs">
+        <label>Outgoing provider — name<input data-field="outgoingAck" maxlength="120"></label>
+        <label>Incoming provider — name<input data-field="incomingAck" maxlength="120"></label>
+        <label>Client approver — name<input data-field="clientAck" maxlength="120"></label>
+        <label>Outgoing acknowledged on<input data-field="outgoingAckDate" type="date"></label>
+        <label>Incoming acknowledged on<input data-field="incomingAckDate" type="date"></label>
+        <label>Client acknowledged on<input data-field="clientAckDate" type="date"></label>
+      </div>
+    </section>
+    <div class="toolbar">
+      <span id="message" role="status" aria-live="polite"></span>
+      <div>
+        <button class="secondary" id="export-json" type="button">Export JSON</button>
+        <button class="secondary" id="import-json" type="button">Import JSON</button>
+        <input id="file-input" type="file" accept="application/json,.json" hidden>
+        <button id="export-md" type="button">Export handover</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    (() => {
+      const KEY = 'handoff-ledger-v1';
+      const owners = ['Outgoing provider', 'Incoming provider', 'Client'];
+      const statuses = ['Requested', 'In progress', 'Complete', 'Exception'];
+      const fields = ['client', 'cutoverDate', 'outgoing', 'incoming', 'clientApprover', 'supportBoundary', 'outgoingAck', 'incomingAck', 'clientAck', 'outgoingAckDate', 'incomingAckDate', 'clientAckDate'];
+      const tbody = document.querySelector('#items');
+      const message = document.querySelector('#message');
+      const fileInput = document.querySelector('#file-input');
+      const blank = () => ({ client: '', cutoverDate: '', outgoing: '', incoming: '', clientApprover: '', supportBoundary: '', outgoingAck: '', incomingAck: '', clientAck: '', outgoingAckDate: '', incomingAckDate: '', clientAckDate: '', items: [] });
+      let state = load();
+
+      function validState(value) {
+        return value && typeof value === 'object' && !Array.isArray(value) && Array.isArray(value.items) && value.items.length <= 500;
+      }
+      function load() {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(KEY) || 'null');
+          return validState(parsed) ? { ...blank(), ...parsed } : blank();
+        } catch { return blank(); }
+      }
+      function save() {
+        localStorage.setItem(KEY, JSON.stringify(state));
+        const completed = state.items.filter(item => item.status === 'Complete').length;
+        document.querySelector('#summary').textContent = `${completed} of ${state.items.length} requests complete · ${state.items.filter(item => item.status === 'Exception').length} exceptions`;
+      }
+      function cellInput(item, key, type, options) {
+        const el = document.createElement(type === 'select' ? 'select' : 'input');
+        if (type !== 'select') el.type = type;
+        el.value = item[key] || '';
+        el.setAttribute('aria-label', key.replace(/[A-Z]/g, letter => ` ${letter.toLowerCase()}`));
+        if (options) for (const value of options) {
+          const option = document.createElement('option'); option.value = value; option.textContent = value; el.append(option);
+        }
+        el.addEventListener('change', () => { item[key] = el.value; save(); });
+        el.addEventListener('input', () => { item[key] = el.value; save(); });
+        return el;
+      }
+      function render() {
+        tbody.replaceChildren();
+        state.items.forEach((item, index) => {
+          const row = document.createElement('tr');
+          for (const input of [cellInput(item, 'title', 'text'), cellInput(item, 'owner', 'select', owners), cellInput(item, 'dueDate', 'date'), cellInput(item, 'status', 'select', statuses), cellInput(item, 'evidence', 'text')]) {
+            const cell = document.createElement('td'); cell.append(input); row.append(cell);
+          }
+          const action = document.createElement('td');
+          const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'danger remove'; remove.textContent = 'Remove';
+          remove.setAttribute('aria-label', `Remove request ${index + 1}`);
+          remove.addEventListener('click', () => { state.items.splice(index, 1); render(); save(); });
+          action.append(remove); row.append(action); tbody.append(row);
+        });
+        document.querySelectorAll('[data-field]').forEach(input => { input.value = state[input.dataset.field] || ''; });
+        save();
+      }
+      document.querySelectorAll('[data-field]').forEach(input => input.addEventListener('input', () => { state[input.dataset.field] = input.value; save(); }));
+      document.querySelector('#add-row').addEventListener('click', () => {
+        state.items.push({ title: '', owner: owners[1], dueDate: '', status: statuses[0], evidence: '' });
+        render(); tbody.lastElementChild?.querySelector('input')?.focus();
+      });
+      function download(name, content, type) {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(new Blob([content], { type })); link.download = name; link.click();
+        setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+      }
+      document.querySelector('#export-json').addEventListener('click', () => download('handoff-ledger.json', JSON.stringify(state, null, 2), 'application/json'));
+      document.querySelector('#import-json').addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', async () => {
+        const file = fileInput.files?.[0]; if (!file) return;
+        try {
+          const imported = JSON.parse(await file.text());
+          if (!validState(imported) || imported.items.some(item => !item || typeof item !== 'object' || Array.isArray(item))) throw new Error('Invalid handover file');
+          state = { ...blank(), ...imported, items: imported.items.map(item => ({ title: '', owner: owners[1], dueDate: '', status: statuses[0], evidence: '', ...item })) };
+          render(); message.textContent = 'Handover imported.';
+        } catch { message.textContent = 'Could not import that JSON handover file.'; }
+        fileInput.value = '';
+      });
+      document.querySelector('#export-md').addEventListener('click', () => {
+        const lines = ['# Handover packet', '', `- Client: ${state.client || 'Not set'}`, `- Outgoing provider: ${state.outgoing || 'Not set'}`, `- Incoming provider: ${state.incoming || 'Not set'}`, `- Client approver: ${state.clientApprover || 'Not set'}`, `- Cutover date: ${state.cutoverDate || 'Not set'}`, '', '## Support boundary', '', state.supportBoundary || 'Not set', '', '## Requests, evidence, and exceptions', '', '| Request | Owner | Due | Status | Evidence reference |', '|---|---|---|---|---|'];
+        for (const item of state.items) lines.push(`| ${item.title || 'Untitled'} | ${item.owner || ''} | ${item.dueDate || ''} | ${item.status || ''} | ${item.evidence || ''} |`);
+        lines.push('', '## Acknowledgements', '', `- Outgoing: ${state.outgoingAck || 'Not acknowledged'} ${state.outgoingAckDate || ''}`, `- Incoming: ${state.incomingAck || 'Not acknowledged'} ${state.incomingAckDate || ''}`, `- Client: ${state.clientAck || 'Not acknowledged'} ${state.clientAckDate || ''}`, '', '> Names and dates are workflow acknowledgements only; they are not cryptographic signatures or legal attestations.', '> Do not store credentials or secrets in this packet.');
+        download('handover-packet.md', lines.join('\n'), 'text/markdown');
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>
