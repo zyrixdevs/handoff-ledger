@@ -30,3 +30,7 @@ See [the customer-discovery guide](docs/customer-discovery.md) for non-leading i
 ## Open source
 
 MIT licensed. See [LICENSE](LICENSE).
+
+## Static demo deployment
+
+`.github/workflows/pages.yml` publishes only `index.html` to GitHub Pages when the default branch changes. Enable Pages with **GitHub Actions** as the build source in the repository settings. The app has no server-side storage; each visitor's draft stays in that browser's local storage.
