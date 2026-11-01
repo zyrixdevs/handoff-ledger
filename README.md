@@ -25,6 +25,8 @@ MSP community discussions describe repeated questions after handover packets are
 
 Generic checklist software is already available through products such as [ITFlow](https://docs.itflow.org/clients/onboarding), [ConnectWise PSA](https://www.connectwise.com/platform/psa/project-management), and [Hudu](https://www.hudu.com/tips_and_tricks_onboarding_offboarding). The hypothesis to test is whether neutral, cross-company coordination and a dated responsibility cutover are useful enough to warrant a dedicated tool.
 
+See [the customer-discovery guide](docs/customer-discovery.md) for non-leading interview questions and evidence that would support or disprove the idea.
+
 ## Open source
 
 MIT licensed. See [LICENSE](LICENSE).
