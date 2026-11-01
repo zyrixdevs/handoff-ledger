@@ -1,0 +1,44 @@
+{
+  "client": "Northstar Demo Co. (fictional)",
+  "cutoverDate": "2026-12-15",
+  "outgoing": "Example Legacy IT (fictional)",
+  "incoming": "Example NextOps (fictional)",
+  "clientApprover": "Morgan Lee (fictional)",
+  "supportBoundary": "Example only: confirm in the real transition plan which provider handles scheduled questions before cutover and which provider owns incidents after the agreed date.",
+  "outgoingAck": "",
+  "incomingAck": "",
+  "clientAck": "",
+  "outgoingAckDate": "",
+  "incomingAckDate": "",
+  "clientAckDate": "",
+  "items": [
+    {
+      "title": "Confirm outgoing provider's service inventory is complete",
+      "owner": "Outgoing provider",
+      "dueDate": "2026-12-01",
+      "status": "Complete",
+      "evidence": "Inventory export reference: northstar-demo/inventory-v1"
+    },
+    {
+      "title": "Verify incoming provider can access the client-owned backup portal",
+      "owner": "Incoming provider",
+      "dueDate": "2026-12-05",
+      "status": "In progress",
+      "evidence": "Client-approved vault item reference: northstar-demo/backup-portal"
+    },
+    {
+      "title": "Confirm the cutover date and after-hours support contact",
+      "owner": "Client",
+      "dueDate": "2026-12-08",
+      "status": "Exception",
+      "evidence": "Client approval reference: pending"
+    },
+    {
+      "title": "Share the network diagram and note known gaps",
+      "owner": "Outgoing provider",
+      "dueDate": "2026-12-10",
+      "status": "Requested",
+      "evidence": "Document location: pending"
+    }
+  ]
+}
