@@ -31,8 +31,9 @@ Show the prototype's owner, due date, evidence reference, exception, cutover bou
 
 - Which part, if any, would change your next transition?
 - Which existing system would this need to fit alongside?
-- Who would initiate and pay for it: the client, outgoing MSP, incoming MSP, or another party?
-- Would you prefer per-transition pricing or a recurring plan? What do you currently spend in staff time or tools for this workflow?
+- How do you buy tools for this workflow today? Who owns the budget and approves a purchase?
+- What staff time or tool spend does this process currently require, and what would a new tool need to replace or improve?
+- Which party would initiate the purchase: the client, outgoing MSP, incoming MSP, or someone else?
 - What security, retention, or contractual requirements would prevent using it?
 - What would need to be true for you to use it in an upcoming transition?
 
@@ -55,3 +56,5 @@ Continue discovery only if multiple independent MSPs describe the same cross-com
 - Existing workaround:
 - Next concrete commitment:
 - Confidence: low / medium / high, with reason:
+
+Record notes only with the participant's consent. Do not record audio without explicit consent. Remove or anonymize identifying details before sharing notes, and delete identifiable notes when they are no longer needed.

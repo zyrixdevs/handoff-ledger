@@ -17,7 +17,7 @@ Open `index.html` in a modern browser. Data stays in that browser's local storag
 
 ## Why this exists
 
-MSP community discussions describe repeated questions after handover packets are delivered and disagreement about overlap support and the moment responsibility changes. A small-provider onboarding discussion also calls out missing owners and fragmented process. These are qualitative pain signals, not proof of market size or willingness to pay:
+MSP community discussions describe repeated questions after handover packets are delivered and disagreement about overlap support and the moment responsibility changes. A commenter in a small-provider onboarding discussion also identifies missing owners and a lack of cohesive process. These are qualitative pain signals, not proof of market size or willingness to pay:
 
 - [Transitioning MSP asking too many questions](https://www.reddit.com/r/msp/comments/1qkeam5/transitioning_msp_asking_too_many_questions/)
 - [Offboarding standards](https://www.reddit.com/r/msp/comments/1roufo1/offboarding_standards/)
