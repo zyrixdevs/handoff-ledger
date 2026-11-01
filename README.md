@@ -36,3 +36,7 @@ MIT licensed. See [LICENSE](LICENSE).
 ## Static demo deployment
 
 `.github/workflows/pages.yml` publishes only `index.html` to GitHub Pages when the default branch changes. Enable Pages with **GitHub Actions** as the build source in the repository settings. The app has no server-side storage; each visitor's draft stays in that browser's local storage.
+
+## Business model hypothesis
+
+Keep the portable local ledger free and open source. If interviews confirm that MSPs need cross-company coordination beyond their PSA, test a paid hosted transition room with shared access, audit history, and branded exports. Per-transition and recurring pricing are both unvalidated; do not build a hosted service until a buyer and willingness to pay are demonstrated. Credentials stay in the client's approved password manager.
